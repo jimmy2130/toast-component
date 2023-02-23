@@ -1,15 +1,18 @@
 import React from 'react';
 import Button from '../Button';
-import Toast from '../Toast';
+import ToastShelf from '../ToastShelf';
 import styles from './ToastPlayground.module.css';
-import useToggle from '../../hooks/use-toggle.hook';
 
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
+	const [messages, setMessages] = React.useState([]);
 	const [message, setMessage] = React.useState('');
 	const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
-	const [isRendered, toggle] = useToggle(false);
+
+	function removeMessage(id) {
+		setMessages(messages.filter(message => message.id !== id));
+	}
 
 	return (
 		<div className={styles.wrapper}>
@@ -17,16 +20,21 @@ function ToastPlayground() {
 				<img alt="Cute toast mascot" src="/toast.png" />
 				<h1>Toast Playground</h1>
 			</header>
-			{isRendered && (
-				<Toast variant={variant} onClick={toggle}>
-					{message}
-				</Toast>
-			)}
+			<ToastShelf messages={messages} removeMessage={removeMessage} />
 			<form
 				className={styles.controlsWrapper}
 				onSubmit={event => {
 					event.preventDefault();
-					if (!isRendered) toggle();
+					setMessages([
+						...messages,
+						{
+							message,
+							variant,
+							id: Math.random(),
+						},
+					]);
+					setMessage('');
+					setVariant(VARIANT_OPTIONS[0]);
 				}}
 			>
 				<div className={styles.row}>
