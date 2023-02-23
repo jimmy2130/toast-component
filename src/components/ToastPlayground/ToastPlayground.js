@@ -1,26 +1,33 @@
 import React from 'react';
-
 import Button from '../Button';
-
+import Toast from '../Toast';
 import styles from './ToastPlayground.module.css';
+import useToggle from '../../hooks/use-toggle.hook';
 
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
 	const [message, setMessage] = React.useState('');
 	const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
+	const [isOn, toggle] = useToggle(false);
+
 	return (
 		<div className={styles.wrapper}>
 			<header>
 				<img alt="Cute toast mascot" src="/toast.png" />
 				<h1>Toast Playground</h1>
 			</header>
-
+			{isOn && (
+				<Toast variant={variant} onClick={toggle}>
+					{message}
+				</Toast>
+			)}
 			<form
 				className={styles.controlsWrapper}
 				onSubmit={event => {
 					event.preventDefault();
-					console.log({ message, variant });
+					// console.log({ message, variant });
+					if (!isOn) toggle();
 				}}
 			>
 				<div className={styles.row}>
