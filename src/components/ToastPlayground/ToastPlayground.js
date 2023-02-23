@@ -8,7 +8,7 @@ const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
 	const [message, setMessage] = React.useState('');
-	const [variant, setVariant] = React.useState();
+	const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
 	return (
 		<div className={styles.wrapper}>
 			<header>
@@ -44,19 +44,22 @@ function ToastPlayground() {
 				<div className={styles.row}>
 					<div className={styles.label}>Variant</div>
 					<div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-						{VARIANT_OPTIONS.map(option => (
-							<label htmlFor={`variant-${option}`} key={option}>
-								<input
-									id={`variant-${option}`}
-									type="radio"
-									name="variant"
-									value={option}
-									checked={option === variant}
-									onChange={event => setVariant(event.target.value)}
-								/>
-								{option}
-							</label>
-						))}
+						{VARIANT_OPTIONS.map(option => {
+							const id = `variant-${option}`;
+							return (
+								<label htmlFor={id} key={id}>
+									<input
+										id={id}
+										type="radio"
+										name="variant"
+										value={option}
+										checked={option === variant}
+										onChange={event => setVariant(event.target.value)}
+									/>
+									{option}
+								</label>
+							);
+						})}
 					</div>
 				</div>
 
