@@ -9,7 +9,7 @@ const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 function ToastPlayground() {
 	const [message, setMessage] = React.useState('');
 	const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
-	const [isOn, toggle] = useToggle(false);
+	const [isRendered, toggle] = useToggle(false);
 
 	return (
 		<div className={styles.wrapper}>
@@ -17,7 +17,7 @@ function ToastPlayground() {
 				<img alt="Cute toast mascot" src="/toast.png" />
 				<h1>Toast Playground</h1>
 			</header>
-			{isOn && (
+			{isRendered && (
 				<Toast variant={variant} onClick={toggle}>
 					{message}
 				</Toast>
@@ -26,8 +26,7 @@ function ToastPlayground() {
 				className={styles.controlsWrapper}
 				onSubmit={event => {
 					event.preventDefault();
-					// console.log({ message, variant });
-					if (!isOn) toggle();
+					if (!isRendered) toggle();
 				}}
 			>
 				<div className={styles.row}>

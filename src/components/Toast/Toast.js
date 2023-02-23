@@ -29,7 +29,9 @@ function Toast({ variant, children, ...delegated }) {
 	}
 	return (
 		<div className={`${styles.toast} ${styles[variant]}`}>
-			<div className={styles.iconContainer}>{<Icon size={24} />}</div>
+			<div className={styles.iconContainer}>
+				<Icon size={24} />
+			</div>
 			<p className={styles.content}>{children}</p>
 			<button className={styles.closeButton} {...delegated}>
 				<X size={24} />
